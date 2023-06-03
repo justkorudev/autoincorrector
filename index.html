@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Autoincorrector</title>
+    </head>
+    <body>
+        <h1>Autoincorrector</h1>
+        <form>
+            <label for="text">Enter your text:</label><br>
+            <input type="text" id="text" name="text"><br>
+        </form>
+        <p>Incorrected text:</p>
+        <textarea id="output" rows="4" cols="50" readonly></textarea>
+        <script>
+            const corrections = {
+                "hindi": "indian",
+                "guys": "gays",
+                "guy": "gay",
+                "cat": "bat",
+                "dog": "dig",
+                "happy": "hippy",
+                "sad": "sod",
+                "good": "gold",
+                "bad": "bed",
+                "hello": "hell",
+                "hi": "high",
+                "bye": "buy",
+                "goodbye": "goodbuy",
+                "see": "sea",
+                "you": "yu",
+                "your": "yur",
+                "yours": "yurs",
+                "sir": "ser",
+                "madam": "madum",
+                "madame": "madum",
+                "miss": "mis",
+                "die": "dye",
+                "dye": "die",
+                "lol": "lollipop"
+            };
+            
+            async function correctText(event) {
+                const text_input = document.getElementById("text");
+                const text = text_input.value;
+                const words = text.split(" ");
+                const corrected_words = words.map(word => {
+                  if (word in corrections) {
+                      return corrections[word];
+                  } else {
+                      return word;
+                  }
+                });
+                const corrected_text = corrected_words.join(" ");
+                const output_element = document.getElementById("output");
+                output_element.innerHTML = corrected_text;
+            }
+
+            const text_input = document.getElementById("text");
+            text_input.addEventListener("input", correctText);
+        </script>
+    </body>
+</html>
