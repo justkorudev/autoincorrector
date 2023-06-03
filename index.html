@@ -12,101 +12,114 @@
         <p>Incorrected text:</p>
         <textarea id="output" rows="4" cols="50" readonly></textarea>
         <script>
-            const corrections = {
-        "hindi": "indian",
-        "guys": "gays",
-        "guy": "gay",
-        "cat": "bat",
-        "dog": "dig",
-        "happy": "hippy",
-        "sad": "sod",
-        "good": "gold",
-        "bad": "bed",
-        "hello": "hell",
-        "hi": "high",
-        "bye": "buy",
-        "goodbye": "goodbuy",
-        "see": "sea",
-        "you": "yu",
-        "your": "yur",
-        "yours": "yurs",
-        "sir": "ser",
-        "madam": "madum",
-        "madame": "madum",
-        "miss": "mis",
-        "die": "dye",
-        "dye": "die",
-        "lol": "lollipop",
-        "cat": "bat",
-        "dog": "dig",
-        "happy": "hippy",
-        "idiot": "intelligent",
-        "stupid": "smart",
-        "intelligent": "idiot",
-        "smart": "stupid",
-        "I": "eye",
-        "me": "my",
-        "my": "me",
-        "mine": "my",
-        "chatgpt": "dumb ai",
-        "chat gpt": "dumb ai",
-        "!": "?",
-        "?": "!",
-        "earthy": "super intelligent ai",
-        "synapselm": "intelligent ai",
-        "girl": "lesbian",
-        "hey": "hye",
-        "hi": "hye",
-        "hello": "hye",
-        "no": "yes",
-        "yes": "no",
-        "nope": "yep",
-        "yep": "nope",
-        "yup": "nope",
-        "gay": "guy",
-        "openai": "nix labs",
-        "open": "nix",
-        "ai": "labs",
-        "open ai": "nix labs",
-        "love": "hate",
-        "hate": "love",
-        "like": "dislike",
-        "dislike": "like",
-        "mum": "dad",
-        "dad": "mom",
-        "mom": "dad",
-        "yo": "yo mama",
-        "yo mama": "yo",
-        "fuck": "dang it",
-        "fk": "dang it",
-        "fking": "horrible",
-        "shit": "dang",
-        "discord": "Neeter",
-        "slack": "Neeter",
-        "whatsapp": "Neeter",
-        "matrix": "Neeter",
-        "element": "Neeter",
-        "Discord": "Neeter",
-        "Slack": "Neeter",
-        "Whatsapp": "Neeter",
-        "Matrix": "Neeter",
-        "Element": "Neeter",
-        "dark": "light",
-        "light": "dark"
-        };
-            
+            let corrections;
+            function forward(text) {
+                const regex = /[\.,!?\s]+/g;
+                corrections = {
+                "hindi": "indian",
+                "guys": "gays",
+                "guy": "gay",
+                "cat": "bat",
+                "dog": "dig",
+                "happy": "hippy",
+                "sad": "sod",
+                "good": "gold",
+                "bad": "bed",
+                "hello": "hell",
+                "hi": "high",
+                "bye": "buy",
+                "goodbye": "goodbuy",
+                "see": "sea",
+                "you": "yu",
+                "your": "yur",
+                "yours": "yurs",
+                "sir": "ser",
+                "madam": "madum",
+                "madame": "madum",
+                "miss": "mis",
+                "die": "dye",
+                "dye": "die",
+                "lol": "lollipop",
+                "cat": "bat",
+                "dog": "dig",
+                "happy": "hippy",
+                "idiot": "intelligent",
+                "stupid": "smart",
+                "intelligent": "idiot",
+                "smart": "stupid",
+                "I": "eye",
+                "me": "my",
+                "my": "me",
+                "mine": "my",
+                "chatgpt": "dumb ai",
+                "chat gpt": "dumb ai",
+                "!": "?",
+                "?": "!",
+                "earthy": "super intelligent ai",
+                "synapselm": "intelligent ai",
+                "girl": "lesbian",
+                "hey": "hye",
+                "hi": "hye",
+                "hello": "hye",
+                "no": "yes",
+                "yes": "no",
+                "nope": "yep",
+                "yep": "nope",
+                "yup": "nope",
+                "gay": "guy",
+                "openai": "nix labs",
+                "open": "nix",
+                "ai": "labs",
+                "open ai": "nix labs",
+                "love": "hate",
+                "hate": "love",
+                "like": "dislike",
+                "dislike": "like",
+                "mum": "dad",
+                "dad": "mom",
+                "mom": "dad",
+                "yo": "yo mama",
+                "yo mama": "yo",
+                "fuck": "dang it",
+                "fk": "dang it",
+                "fking": "horrible",
+                "shit": "dang",
+                "discord": "Neeter",
+                "slack": "Neeter",
+                "whatsapp": "Neeter",
+                "matrix": "Neeter",
+                "element": "Neeter",
+                "Discord": "Neeter",
+                "Slack": "Neeter",
+                "Whatsapp": "Neeter",
+                "Matrix": "Neeter",
+                "Element": "Neeter",
+                "dark": "light",
+                "light": "dark",
+                "sus": "cringe",
+                "among us": "cringe",
+                "amogus": "cringe"
+                };
+                const uncapitalized = text.toLowerCase();
+                const splitted = uncapitalized.split(regex);
+                const corrected = splitted.map(word => {
+                    const uncapped = word.charAt(0).toUpperCase() + word.slice(1);
+                    if (word in corrections) {
+                        return corrections[word];
+                    } else if (uncapped in corrections) {
+                        return corrections[uncapped];
+                    } else {
+                        return word;
+                    }
+                });
+                const joined = corrected.join(" ");
+                return joined;
+            }
+
             async function correctText(event) {
                 const text_input = document.getElementById("text");
                 const text = text_input.value;
-                const words = text.split(" ");
-                const corrected_words = words.map(word => {
-                  if (word in corrections) {
-                      return corrections[word];
-                  } else {
-                      return word;
-                  }
-                });
-                const corrected_text = corrected_words.join(" ");
+                const corrected_text = forward(text);
                 const output_element = document.getElementById("output");
                 output_element.innerHTML = corrected_text;
             }
